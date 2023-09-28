@@ -1,0 +1,14 @@
+{%extends 'user/home_layout.html'%}
+{%block content%}
+<div class="content" style='background-color:white;padding:3em'>
+    <h2>My Reviews</h2>
+    {%for m in userdeets.user_reviews%}
+    <div class='mb-2'>
+    <h3>{{m.rev_title}}</h3>
+    <p>{{m.rev_text}}</p>
+    <p>{{m.rev_date}}</p>
+    </div>
+    <hr>
+    {%endfor%}
+</div>
+{%endblock%}

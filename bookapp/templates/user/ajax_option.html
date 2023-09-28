@@ -1,0 +1,54 @@
+{%extends 'user/home_layout.html'%}
+
+{%block content%}
+<div class='content px-3 py-3 bg-white'>
+    <div id='info'></div>
+    <form id='myform' action='' method='post'>
+    <div class='row'>
+        <div class='col'>
+            {{cform.email.label}}
+            {{cform.email(class_='form-control')}}
+        </div>
+
+        <div class='col'>
+            <label>submit here</label><br>
+            {{cform.btnsubmit(class_='btn btn-secondary noround' ,type='button')}}
+            {{cform.csrf_token}}
+        </div>
+
+    </div>
+    </form>
+</div>
+{%endblock%}
+
+{%block customjs%}
+<script type='text/javascript'>
+    $(document).ready(function(){
+        $('#btnsubmit').click(function(event){
+            event.preventDefault()
+            //var data=$('myform').serialize() //name attribute must be set on the input, the form must submit and submittable
+            var myform=document.getElementById('myform')
+            //var data=new FormData(myform)
+            var data2send=$('#myform').serialize()
+            $.ajax({
+                url:'/ajaxopt/',
+                type:'post',
+                data:data2send,
+                error:function(errmsg){
+                    console.log(errmsg)
+                },
+                success:function(serverRsp){
+                    $('#info').html(serverRsp).addClass('alert alert-info')
+                    //alert (serverRsp)
+                },
+                complete:function(){
+                    $('#btnsubmit').val('Subscribe')
+                },
+                beforeSend(){
+                    $('#btnsubmit').val('please wait...')
+                }
+            })
+        })
+    })
+</script>
+{%endblock%}

@@ -1,0 +1,78 @@
+{%extends 'admin/admin_layout.html'%}
+{%block main%}
+<main>
+  {% set m=get_flashed_messages(with_categories=True)%}
+  {%if m%}
+  {%for cat,msg in m%}
+  {%if cat == 'danger'%}
+  <div class='alert alert-danger text-info'>{{msg}}</div>
+  {%else%}
+  <div class='alert alert-success text-info'>{{msg}}</div>
+  {%endif%}
+  {%endfor%}
+  {%endif%}
+
+
+  <div class="container-fluid px-4">
+                        <h1 class="mt-4">Add Books</h1>
+                        <ol class="breadcrumb mb-4">
+                            <li class="breadcrumb-item">Dashboard</li>
+                              <li class="breadcrumb-item active">Add Book</li>
+                        </ol>
+                      <div class="row">
+                          <div class="col">
+                              
+        <form action='' method='post' enctype='multipart/form-data'>
+            <input type='hidden' name='csrf_token' value='{{csrf_token()}}'>
+          <div class="mb-3">
+            <label for="title" class="form-label">Book Title</label>
+            <input type="text" class="form-control" id="title" name='title'>
+             
+          </div>
+          <div class="mb-3">
+            <label for="category" class="form-label">Category</label>
+           <select name='category' id='category' class='form-control'>
+            {%for c in cats%}
+            <option value='{{c.cat_id}}'>{{c.cat_name}}</option>
+            {%endfor%}
+           </select>
+          </div>
+           
+          <fieldset class="mb-3">
+            <legend>Status</legend>
+            <div class="form-check">
+              <input type="radio" class="form-check-input" id="status" name='status' value='1'>
+              <label class="form-check-label" for="status">Publish</label>
+            </div>
+            <div class="mb-3 form-check">
+              <input type="radio" class="form-check-input" id="status" name='status' value='0'>
+              <label class="form-check-label" for="status">Do Not Publish</label>
+            </div>
+          </fieldset>
+          <div class="mb-3">
+            <label class="form-label" for="customFile">Upload Cover</label>
+            <input type="file" class="form-control" id="customFile" name='cover'>
+          </div>
+           <div class="mb-3">
+            <label class="form-label" for="customFile">Description</label>
+         <textarea name="description" class="form-control" id='description'></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label" for="customFile">Year Published</label>
+            <input type="text" class="form-control" id="yearpub" name='yearpub'>
+          </div>
+          
+         
+          <button type="submit" class="btn btn-primary">Add Book!</button>
+        </form>
+
+
+                          </div>
+                      </div>
+                        
+                    </div>
+
+
+</main>
+{%endblock main%}
+
